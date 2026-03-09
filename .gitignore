@@ -1,0 +1,46 @@
+# Data (proprietary / large) - only top-level data dirs, not src/data/
+*/data/raw/
+*/data/processed/
+*.csv
+*.npy
+*.json
+
+# Model artifacts - only top-level model dirs, not src/models/
+*/models/*.pkl
+*/models/*.pt
+*/models/*.pth
+*/models/*.bin
+checkpoints/
+*.pkl
+*.pt
+*.pth
+*.bin
+
+# Logs and results
+logs/
+results/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
