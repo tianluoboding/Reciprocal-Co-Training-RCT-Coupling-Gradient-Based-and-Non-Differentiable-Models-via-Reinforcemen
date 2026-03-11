@@ -1,4 +1,4 @@
-# RCT: Reinforcement Collaborative Training for Clinical Classification
+# Reciprocal Co-Training (RCT): Coupling Gradient-Based and Non-Differentiable Models via Reinforcement Learning
 
 This repository contains the source code for the **Reinforcement Collaborative Training (RCT)** framework, which iteratively co-trains a Large Language Model (LLM) and a Random Forest (RF) classifier for binary clinical classification tasks.
 
