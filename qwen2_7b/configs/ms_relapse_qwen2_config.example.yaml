@@ -1,0 +1,92 @@
+# Example Qwen2-7B RCT config for ms_relapse.
+# Replace these relative paths with your local preprocessed files.
+# Raw MS-Relapse clinical data and trained weights are not included in this repository.
+
+project_root: .
+dataset: ms_relapse
+seed: 42
+
+data:
+  prompts_json: data/ms_relapse/raw/descriptive_text.json
+  prompt_key: prompt
+  labels_npy: data/ms_relapse/raw/y_all.npy
+  train_indices_json: data/ms_relapse/raw/train_idxs.json
+  test_indices_json: data/ms_relapse/raw/test_idxs.json
+  x_train_npy: data/ms_relapse/processed/X_train_selected_k15.npy
+  x_test_npy: data/ms_relapse/processed/X_test_selected_k15.npy
+
+split:
+  val_ratio: 0.15
+
+model:
+  name: Qwen/Qwen2-7B-Instruct
+  quantized: true
+  max_seq_length: 320
+
+lora:
+  r: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj]
+  prepare_kbit: true
+  gradient_checkpointing: true
+
+embedding:
+  max_seq_length: 320
+  batch_size: 4
+
+pca:
+  n_components: 5
+
+rf:
+  n_estimators: 500
+  max_depth: 8
+  min_samples_leaf: 2
+  min_samples_split: 5
+  class_weight: balanced_subsample
+  n_jobs: -1
+
+supervised:
+  batch_size: 1
+  learning_rate: 0.0002
+  max_epochs: 3
+  early_stopping_patience: 2
+  max_grad_norm: 1.0
+
+ppo:
+  max_outer_iterations: 10
+  convergence_patience: 3
+  samples_per_outer: 512
+  batch_size: 1
+  learning_rate: 0.000005
+  max_grad_norm: 0.5
+  value_coef: 0.5
+  supervised_coef: 0.5
+
+reward:
+  scale: 2.0
+  clip: [-0.45, 0.45]
+  lambda_acc: 0.5
+  accuracy_mode: fn_heavy
+
+evaluation:
+  batch_size: 4
+
+threshold_eval:
+  val_prob_csv: outputs/qwen2_7b/ms_relapse_qwen2_rct_outer01_val_rf_probs.csv
+  test_prob_csv: outputs/qwen2_7b/ms_relapse_qwen2_rct_outer01_test_rf_probs.csv
+  target_recalls: [0.8]
+
+table_metrics:
+  probability_csvs:
+    - name: qwen2_rct_rf_outer01_test
+      path: outputs/qwen2_7b/ms_relapse_qwen2_rct_outer01_test_rf_probs.csv
+
+outputs:
+  root: outputs/qwen2_7b
+  checkpoints: checkpoints/qwen2_7b
+
+curve_csvs:
+  probability_csvs:
+    - name: ms_relapse_qwen2_rct_rf_outer01_test
+      path: outputs/qwen2_7b/ms_relapse_qwen2_rct_outer01_test_rf_probs.csv

@@ -1,24 +1,38 @@
 # Data (proprietary / large) - only top-level data dirs, not src/data/
 */data/raw/
 */data/processed/
+data/raw/
+raw_data/
+private_data/
 *.csv
 *.npy
+*.npz
 *.json
 
-# Model artifacts - only top-level model dirs, not src/models/
+# Model artifacts and checkpoints
+checkpoints/
+*/checkpoints/
 */models/*.pkl
 */models/*.pt
 */models/*.pth
 */models/*.bin
-checkpoints/
 *.pkl
 *.pt
 *.pth
 *.bin
+*.safetensors
 
-# Logs and results
+# Logs, caches, and generated outputs
 logs/
+*/logs/
+outputs/
+*/outputs/
 results/
+results/private/
+cache/
+*/cache/
+wandb/
+*.log
 
 # Python
 __pycache__/
@@ -28,11 +42,15 @@ __pycache__/
 dist/
 build/
 *.egg
+.pytest_cache/
+.mypy_cache/
 
-# Virtual environments
+# Virtual environments and local secrets
 venv/
 env/
+.venv/
 .env
+.env.*
 
 # IDE
 .vscode/
@@ -44,3 +62,7 @@ env/
 # OS
 .DS_Store
 Thumbs.db
+
+# Keep placeholders if needed
+!.gitkeep
+!*.example.json
