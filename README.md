@@ -100,7 +100,7 @@ python qwen2_7b/ms_relapse/scripts/qwen2_stage1_frozen_embedding_rf.py --config 
 python qwen2_7b/ms_relapse/scripts/qwen2_stage5_ppo_rf_refresh.py --config qwen2_7b/configs/ms_relapse_qwen2_config.example.yaml
 ```
 
-Equivalent entry points are available under `qwen2_7b/breast_cancer/scripts/` and `qwen2_7b/diabetes/scripts/`.
+Breast Cancer and Diabetes use their own Qwen2 entry points under `qwen2_7b/breast_cancer/scripts/` and `qwen2_7b/diabetes/scripts/` for LLM baseline training, PPO+RF refresh, threshold evaluation, and curve CSV generation. The MS folder additionally includes explicit Stage 1 frozen-embedding RF and Stage 4B LoRA warm-start entry points.
 
 ## Anonymization Note
 
